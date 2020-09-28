@@ -1,5 +1,16 @@
+basePath: /api
+host: localhost:8080
 info:
-  contact: {}
-  license: {}
+  contact:
+    email: support@localhost.local
+    name: Demonster API Support
+    url: https://github.com/0x1a0b/demonster/issues
+  description: This is an example api to demonstrate things
+  license:
+    name: MIT
+    url: https://github.com/0x1a0b/demonster/blob/master/LICENSE
+  termsOfService: http://localhost:8080/tos.html
+  title: Demonster API
+  version: "1.0"
 paths: {}
 swagger: "2.0"

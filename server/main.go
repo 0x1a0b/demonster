@@ -1,6 +1,9 @@
 package main
 
 import (
+	_ "github.com/0x1a0b/demonster/server/docs"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	swaggerFiles "github.com/swaggo/files"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"net/http"
@@ -21,11 +24,26 @@ func main() {
 func Setup() (r *gin.Engine) {
 	r = gin.Default()
 	r.Use(CORS)
+	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json") // The url pointing to API definition
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 	MountApi(r.Group("/api"))
 	r.NoRoute(NotFound)
 	return
 }
+// @title Demonster API
+// @version 1.0
+// @description This is an example api to demonstrate things
+// @termsOfService http://localhost:8080/tos.html
 
+// @contact.name Demonster API Support
+// @contact.url https://github.com/0x1a0b/demonster/issues
+// @contact.email support@localhost.local
+
+// @license.name MIT
+// @license.url https://github.com/0x1a0b/demonster/blob/master/LICENSE
+
+// @host localhost:8080
+// @BasePath /api
 func CORS(c *gin.Context) {
 	c.Header("Access-Control-Allow-Origin", "*")
 	c.Header("Access-Control-Allow-Methods", "*")

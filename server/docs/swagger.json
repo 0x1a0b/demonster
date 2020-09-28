@@ -1,8 +1,21 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {},
-        "license": {}
+        "description": "This is an example api to demonstrate things",
+        "title": "Demonster API",
+        "termsOfService": "http://localhost:8080/tos.html",
+        "contact": {
+            "name": "Demonster API Support",
+            "url": "https://github.com/0x1a0b/demonster/issues",
+            "email": "support@localhost.local"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/0x1a0b/demonster/blob/master/LICENSE"
+        },
+        "version": "1.0"
     },
+    "host": "localhost:8080",
+    "basePath": "/api",
     "paths": {}
 }

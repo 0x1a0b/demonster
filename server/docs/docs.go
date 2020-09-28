@@ -18,8 +18,16 @@ var doc = `{
     "info": {
         "description": "{{.Description}}",
         "title": "{{.Title}}",
-        "contact": {},
-        "license": {},
+        "termsOfService": "http://localhost:8080/tos.html",
+        "contact": {
+            "name": "Demonster API Support",
+            "url": "https://github.com/0x1a0b/demonster/issues",
+            "email": "support@localhost.local"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/0x1a0b/demonster/blob/master/LICENSE"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -38,12 +46,12 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "",
-	Host:        "",
-	BasePath:    "",
+	Version:     "1.0",
+	Host:        "localhost:8080",
+	BasePath:    "/api",
 	Schemes:     []string{},
-	Title:       "",
-	Description: "",
+	Title:       "Demonster API",
+	Description: "This is an example api to demonstrate things",
 }
 
 type s struct{}
