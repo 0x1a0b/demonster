@@ -2,10 +2,10 @@ package main
 
 import (
 	_ "github.com/0x1a0b/demonster/server/docs"
-	ginSwagger "github.com/swaggo/gin-swagger"
-	swaggerFiles "github.com/swaggo/files"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"net/http"
 	"time"
 )
@@ -21,15 +21,6 @@ func main() {
 	r.Run("0.0.0.0:8080")
 }
 
-func Setup() (r *gin.Engine) {
-	r = gin.Default()
-	r.Use(CORS)
-	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json") // The url pointing to API definition
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
-	MountApi(r.Group("/api"))
-	r.NoRoute(NotFound)
-	return
-}
 // @title Demonster API
 // @version 1.0
 // @description This is an example api to demonstrate things
@@ -44,6 +35,16 @@ func Setup() (r *gin.Engine) {
 
 // @host localhost:8080
 // @BasePath /api
+func Setup() (r *gin.Engine) {
+	r = gin.Default()
+	r.Use(CORS)
+	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json") // The url pointing to API definition
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
+	MountApi(r.Group("/api"))
+	r.NoRoute(NotFound)
+	return
+}
+
 func CORS(c *gin.Context) {
 	c.Header("Access-Control-Allow-Origin", "*")
 	c.Header("Access-Control-Allow-Methods", "*")
@@ -66,10 +67,27 @@ func MountApi(router *gin.RouterGroup) {
 	return
 }
 
+// AlivePing godoc
+// @Summary Ping Pong the Server
+// @Description Test Backend Aliveness
+// @ID get-pinged
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} Pong
+// @Router /alive [get]
 func AlivePing(c *gin.Context) {
 	now := time.Now()
-	c.JSON(http.StatusOK, gin.H{"status": "ok", "time": now.String()})
+	p := Pong{
+		Response: "pong",
+		Time:     now.String(),
+	}
+	c.JSON(http.StatusOK, p)
 	return
+}
+
+type Pong struct {
+	Response string `json:"response"`
+	Time     string `json:"time"`
 }
 
 func NotFound(c *gin.Context) {
@@ -86,12 +104,20 @@ func NotFound(c *gin.Context) {
 }
 
 type ActionsResponse struct {
-	BodyLen int    `json:"body_len"`
-	Message string `json:"message"`
-	Body    string `json:"body"`
+	BodyLen int         `json:"body_len"`
+	Message string      `json:"message"`
+	Body    string      `json:"body"`
 	Headers interface{} `json:"headers"`
 }
 
+// ActionsRequest godoc
+// @Summary Echoes body and headers
+// @Description Test Endpoint for Smuggling Verification
+// @ID get-pinged
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} ActionsResponse
+// @Router /actions/request [post]
 func ActionsRequest(c *gin.Context) {
 	rawData, _ := c.GetRawData()
 	body := string(rawData[:])
@@ -101,7 +127,7 @@ func ActionsRequest(c *gin.Context) {
 	ar := ActionsResponse{
 		BodyLen: length,
 		Message: "success",
-		Body: body,
+		Body:    body,
 		Headers: headers,
 	}
 	c.JSON(http.StatusOK, ar)

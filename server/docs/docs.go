@@ -32,7 +32,80 @@ var doc = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/actions/request": {
+            "post": {
+                "description": "Test Endpoint for Smuggling Verification",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Echoes body and headers",
+                "operationId": "get-pinged",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.ActionsResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/alive": {
+            "get": {
+                "description": "Test Backend Aliveness",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Ping Pong the Server",
+                "operationId": "get-pinged",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Pong"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.ActionsResponse": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "string"
+                },
+                "body_len": {
+                    "type": "integer"
+                },
+                "headers": {
+                    "type": "object"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.Pong": {
+            "type": "object",
+            "properties": {
+                "response": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }`
 
 type swaggerInfo struct {

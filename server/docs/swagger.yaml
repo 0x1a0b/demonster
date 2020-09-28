@@ -1,4 +1,23 @@
 basePath: /api
+definitions:
+  main.ActionsResponse:
+    properties:
+      body:
+        type: string
+      body_len:
+        type: integer
+      headers:
+        type: object
+      message:
+        type: string
+    type: object
+  main.Pong:
+    properties:
+      response:
+        type: string
+      time:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -12,5 +31,33 @@ info:
   termsOfService: http://localhost:8080/tos.html
   title: Demonster API
   version: "1.0"
-paths: {}
+paths:
+  /actions/request:
+    post:
+      consumes:
+      - application/json
+      description: Test Endpoint for Smuggling Verification
+      operationId: get-pinged
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.ActionsResponse'
+      summary: Echoes body and headers
+  /alive:
+    get:
+      consumes:
+      - application/json
+      description: Test Backend Aliveness
+      operationId: get-pinged
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Pong'
+      summary: Ping Pong the Server
 swagger: "2.0"
