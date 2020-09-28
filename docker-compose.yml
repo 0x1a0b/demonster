@@ -1,0 +1,7 @@
+version: '2'
+services:
+  server:
+    container_name: reqserver
+    build: server
+    ports:
+      - "8080:8080"
