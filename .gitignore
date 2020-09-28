@@ -13,3 +13,18 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+# vim swap files
+*.swp
+*~
+
+# secrets
+*.secret.yml
+*.secret.txt
+
+# other stuff
+tmp/
+local/
+secret/
+
+.idea
