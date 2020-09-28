@@ -1,0 +1,35 @@
+{
+	"info": {
+		"_postman_id": "f7673952-e7dd-4329-ad03-d0668a475acc",
+		"name": "demonster",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/api/actions/request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "12345678\r\ndsf\r\ndas\r\nf\r\nads\r\nfdas\r\nfadsf\r\ndsf"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/actions/request",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"actions",
+						"request"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
