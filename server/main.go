@@ -67,7 +67,25 @@ func NotFound(c *gin.Context) {
 	return
 }
 
+type ActionsResponse struct {
+	BodyLen int    `json:"body_len"`
+	Message string `json:"message"`
+	Body    string `json:"body"`
+	Headers interface{} `json:"headers"`
+}
+
 func ActionsRequest(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{ "status": "success" })
+	rawData, _ := c.GetRawData()
+	body := string(rawData[:])
+	length := len(rawData)
+	headers := c.Request.Header
+
+	ar := ActionsResponse{
+		BodyLen: length,
+		Message: "success",
+		Body: body,
+		Headers: headers,
+	}
+	c.JSON(http.StatusOK, ar)
 	return
 }
